@@ -18,7 +18,7 @@ const Home = () => {
         setIsModalOpen(true);
         setTimeout(() => {
             document.getElementById("my_modal_3").showModal();
-        }, 0); // Delay to ensure modal is mounted first
+        }, 100); // Delay to ensure modal is mounted first
     };
 
     const closeModal = () => {
@@ -32,6 +32,22 @@ const Home = () => {
                 const user = result.user;
                 setUser(user);
                 setLoading(false);
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName,
+                    userId: result.user?.uid,
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        // console.log(res.data)
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Registered Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                    })
 
             }).catch((error) => {
                 // Handle Errors here.
@@ -72,7 +88,8 @@ const Home = () => {
                         }
                     });
                     closeModal();
-                    navigate("/");
+                     // Refresh the page
+                     window.location.reload();
                 }
             })
 
@@ -82,7 +99,7 @@ const Home = () => {
         <div className="min-h-[90vh] bg-gray-100 flex flex-col justify-center items-center w-10/12 mx-auto">
             {!user && <div>
                 <h2 className="text-3xl text-center max-w-lg">Welcome to Task Manager! Pls login to continue</h2>
-                <div className="mx-auto my-20"><button className="btn text-center " onClick={LoginHandler}>Login with Google</button></div>
+                <div className=" my-20 text-center"><button className="btn text-center mx-auto border border-green-400" onClick={LoginHandler}>Login with Google</button></div>
             </div>}
             <div>
                 {user ?
