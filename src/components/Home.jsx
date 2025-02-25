@@ -12,7 +12,7 @@ const Home = () => {
     const axiosPublic = useAxiosPublic()
     console.log(status)
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -40,13 +40,15 @@ const Home = () => {
                 axiosPublic.post('/users', userInfo)
                     .then(res => {
                         // console.log(res.data)
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Registered Successfully",
-                            showConfirmButton: false,
-                            timer: 1500
-                          });
+                        if(res.data.insertedId){
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Registered Successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     })
 
             }).catch((error) => {
@@ -63,8 +65,8 @@ const Home = () => {
         const title = formData.title.value
         const description = formData.description.value
         const time = Date()
-        const taskData = { title, description, category: status, time,email:user?.email }
-       
+        const taskData = { title, description, category: status, time, email: user?.email }
+
 
         axiosPublic.post("/addTask", taskData)
             .then(res => {
@@ -88,24 +90,21 @@ const Home = () => {
                         }
                     });
                     closeModal();
-                     // Refresh the page
-                     window.location.reload();
+                    // Refresh the page
+                    window.location.reload();
                 }
             })
 
         console.log("form submitted", taskData)
     }
     return (
-        <div className="min-h-[90vh] bg-gray-100 flex flex-col justify-center items-center w-10/12 mx-auto">
-            {!user && <div>
-                <h2 className="text-3xl text-center max-w-lg">Welcome to Task Manager! Pls login to continue</h2>
-                <div className=" my-20 text-center"><button className="btn text-center mx-auto border border-green-400" onClick={LoginHandler}>Login with Google</button></div>
-            </div>}
-            <div>
+        <div className="min-h-[80vh] bg-gray-100 flex flex-col justify-center items-center w-10/12 mx-auto">
+            {/* {!user && } */}
+            <div className="w-full ">
                 {user ?
                     <div>
-                        <div className="mx-auto my-5">{/* You can open the modal using document.getElementById('ID').showModal() method */}
-                            <button className="btn w-full border-none bg-green-400" onClick={openModal}>Add Task</button>
+                        <div className="mx-auto">{/* You can open the modal using document.getElementById('ID').showModal() method */}
+                            <button className="btn w-full border-none bg-blue-500 text-base-200 font-bold text-2xl mb-2" onClick={openModal}>Add Task</button>
                             <dialog id="my_modal_3" className="modal" open={isModalOpen}>
                                 <div className="modal-box">
                                     <form method="dialog">
@@ -115,19 +114,19 @@ const Home = () => {
                                         <div className="form-control">
                                             <label className="label">
                                                 <span className="label-text">Title</span>
-                                            </label><br/>
+                                            </label><br />
                                             <input type="text" name="title" placeholder="Task" className="input input-bordered w-full" required />
                                         </div>
                                         <div className="form-control">
                                             <label className="label">
                                                 <span className="label-text">Description</span>
-                                            </label><br/>
+                                            </label><br />
                                             <input type="text" name="description" placeholder="Description" className="input input-bordered w-full" required />
                                         </div>
                                         <div className="form-control">
                                             <label className="label">
                                                 <span className="label-text">Category</span>
-                                            </label><br/>
+                                            </label><br />
                                             <select
                                                 value={status}
                                                 onChange={e => setStatus(e.target.value)}
@@ -149,7 +148,10 @@ const Home = () => {
                         <Task />
                     </div> :
                     <>
-
+                        <div className="bg-green-200 min-h-[80vh] flex flex-col justify-center">
+                            <h2 className="text-3xl text-center max-w-lg mx-auto py-10">Welcome to Task Manager! Pls login to continue</h2>
+                            <div className=" my-20 text-center"><button className="btn text-center mx-auto border border-green-400" onClick={LoginHandler}>Login with Google</button></div>
+                        </div>
                     </>}
             </div>
 

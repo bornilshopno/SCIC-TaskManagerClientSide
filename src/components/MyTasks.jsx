@@ -111,86 +111,90 @@ const MyTasks = () => {
 
 
     return (
-        <div>
-            <h2 className="text-2xl text-center font-semibold">All My Tasks</h2>
-            <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Action</th>
+        <div className="w-10/12 mx-auto min-h-screen  ">
+            <h2 className="text-2xl text-center font-semibold bg-green-200 py-10 border-b-4">All My Tasks</h2>
+            {(userDatas.length>0) ? 
+            <div className="overflow-x-auto bg-green-200">
+            <table className="table">
+                {/* head */}
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {userDatas?.map((data, idx) =>
+                        <tr className="bg-base-200" key={data._id}>
+                            <th>{idx + 1}</th>
+                            <td>{data.title}</td>
+                            <td>{data.category}</td>
+                            <td>{data.description}</td>
+                            <td>
+                                <div className="flex gap-2 justify-start items-center">
+                                    <button onClick={() => handleDelete(data)} className='btn btn-xs'><MdDeleteForever className="text-xl text-red-400" /></button>
+                                    <button onClick={openModal4} className='btn btn-xs'><TbListDetails className="text-xl text-green-400" /></button>
+
+                                    {/* modal 4 */}
+                                    <dialog id="my_modal_4" className="modal" open={isModalOpen}>
+                                        <div className="modal-box">
+                                            <form method="dialog">
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal4}>✕</button>
+                                            </form>
+                                            <form onSubmit={(e) => handleUpdate(e, data)}>
+                                                <div className="form-control">
+                                                    <label className="label">
+                                                        <span className="label-text">Title</span>
+                                                    </label><br />
+                                                    <input type="text" name="title" defaultValue={data.title} placeholder="Task" className="input input-bordered w-full" required />
+                                                </div>
+                                                <div className="form-control">
+                                                    <label className="label">
+                                                        <span className="label-text">Description</span>
+                                                    </label><br />
+                                                    <input type="text" defaultValue={data.description} name="description" placeholder="Description" className="input input-bordered w-full" required />
+                                                </div>
+                                                <div className="form-control">
+                                                    <label className="label">
+                                                        <span className="label-text">Category</span>
+                                                    </label><br />
+                                                    <select
+                                                        value={status}
+                                                        onChange={e => setStatus(e.target.value)}
+                                                        className="select select-bordered w-full">
+                                                        <option value="" disabled>Task Status</option>
+                                                        <option value="to-do">To-Do</option>
+                                                        <option value="in-progress">In-Progress</option>
+                                                        <option value="done">Completed</option>
+                                                    </select>
+                                                </div>
+                                                <div className="form-control mt-6 text-end">
+                                                    <button className="btn btn-primary">Update Task</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </dialog>
+                                </div>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {userDatas?.map((data, idx) =>
-                            <tr className="bg-base-200" key={data._id}>
-                                <th>{idx + 1}</th>
-                                <td>{data.title}</td>
-                                <td>{data.category}</td>
-                                <td>{data.description}</td>
-                                <td>
-                                    <div className="flex gap-2 justify-start items-center">
-                                        <button onClick={() => handleDelete(data)} className='btn btn-xs'><MdDeleteForever className="text-xl text-red-400" /></button>
-                                        <button onClick={openModal4} className='btn btn-xs'><TbListDetails className="text-xl text-green-400" /></button>
-
-                                        {/* modal 4 */}
-                                        <dialog id="my_modal_4" className="modal" open={isModalOpen}>
-                                            <div className="modal-box">
-                                                <form method="dialog">
-                                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal4}>✕</button>
-                                                </form>
-                                                <form onSubmit={(e) => handleUpdate(e, data)}>
-                                                    <div className="form-control">
-                                                        <label className="label">
-                                                            <span className="label-text">Title</span>
-                                                        </label><br />
-                                                        <input type="text" name="title" defaultValue={data.title} placeholder="Task" className="input input-bordered w-full" required />
-                                                    </div>
-                                                    <div className="form-control">
-                                                        <label className="label">
-                                                            <span className="label-text">Description</span>
-                                                        </label><br />
-                                                        <input type="text" defaultValue={data.description} name="description" placeholder="Description" className="input input-bordered w-full" required />
-                                                    </div>
-                                                    <div className="form-control">
-                                                        <label className="label">
-                                                            <span className="label-text">Category</span>
-                                                        </label><br />
-                                                        <select
-                                                            value={status}
-                                                            onChange={e => setStatus(e.target.value)}
-                                                            className="select select-bordered w-full">
-                                                            <option value="" disabled>Task Status</option>
-                                                            <option value="to-do">To-Do</option>
-                                                            <option value="in-progress">In-Progress</option>
-                                                            <option value="done">Completed</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="form-control mt-6 text-end">
-                                                        <button className="btn btn-primary">Update Task</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </dialog>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
+                    )}
 
 
-                    </tbody>
+                </tbody>
 
 
 
 
 
 
-                </table>
-            </div>
+            </table>
+        </div>
+        :
+        <div className="bg-green-200 ">
+            <h2 className=" py-16 max-w-xl mx-auto text-center">No task posted from your end yet!</h2></div>}
         </div>
     );
 };

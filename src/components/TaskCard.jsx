@@ -30,7 +30,7 @@ const TaskCard = ({ item }) => {
     const newDate = new Date(time);
 
     return (
-        <div className="p-3 rounded-xl bg-gray-200 border border-gray-400">
+        <div className="p-3 rounded-xl bg-green-200 border border-gray-400">
             <div className="flex justify-between items-center mb-2">
                 <p className="text-black">Time: {timeAgo(newDate)}</p>
                 <h2 className="text-white font-medium text-sm bg-blue-400 px-2 rounded-md">{category}</h2>
