@@ -27,7 +27,6 @@ const Task = () => {
     }
   })
 
-  console.log(inProgress, toDo, done)
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
       <div className="border-12 border-green-400 rounded-lg">

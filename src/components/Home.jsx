@@ -10,7 +10,7 @@ const Home = () => {
     const { loading, setLoading, user, setUser, logOut, googleSignIn, auth, } = useContext(AuthContext);
     const [status, setStatus] = useState("to-do")
     const axiosPublic = useAxiosPublic()
-    console.log(status)
+  
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate()
 
@@ -39,7 +39,7 @@ const Home = () => {
                 }
                 axiosPublic.post('/users', userInfo)
                     .then(res => {
-                        // console.log(res.data)
+                     setStatus("to-do")
                         if(res.data.insertedId){
                             Swal.fire({
                                 position: "top-end",
@@ -70,7 +70,7 @@ const Home = () => {
 
         axiosPublic.post("/addTask", taskData)
             .then(res => {
-                console.log(res.data);
+          
                 if (res.data.insertedId) {
                     Swal.fire({
                         title: "Task Saved Successfully",
@@ -95,7 +95,7 @@ const Home = () => {
                 }
             })
 
-        console.log("form submitted", taskData)
+    
     }
     return (
         <div className="min-h-[80vh] bg-gray-100 flex flex-col justify-center items-center w-10/12 mx-auto">

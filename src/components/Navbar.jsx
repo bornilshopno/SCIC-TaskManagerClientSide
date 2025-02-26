@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuthContext from "./AuthContext";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -13,7 +13,7 @@ const Navbar = () => {
 
     }
     return (
-        <div className="bg-green-500 fixed w-full">
+        <div className="bg-green-500 fixed w-full z-50">
             <div className="py-4 bg-green-500 flex flex-col sm:flex-row gap-2 justify-between items-center w-10/12 mx-auto ">
                 <h2 className="text-2xl lg:text-4xl text-center font-bold px-auto  text-gray-700">Task Manager</h2>
                 <div>

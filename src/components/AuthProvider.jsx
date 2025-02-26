@@ -14,25 +14,6 @@ const AuthProvider = ( {children}) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-          
-            // if(currentUser?.email){
-            //     const user={email: currentUser.email};
-            //     axiosSecure.post("/jwt" ,user)
-            //     // axios.post("https://server-side-life-style.vercel.app/jwt", user, {withCredentials:true})
-            //     .then(res=> {
-            //         setLoading(false)
-            //     })
-            // }
-            // else{
-            //     axiosSecure.post("/logout" ,{})
-            //     // axios.post("https://server-side-life-style.vercel.app/logout" ,{}, {withCredentials:true})
-            //     .then(res=> {console.log(res.data);
-            //         setLoading(false)
-            //     })
-            //     .catch(error => {
-            //         console.error('Error during logout:', error);
-            //     });
-            // }
         
         })
 

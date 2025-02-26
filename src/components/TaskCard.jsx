@@ -1,5 +1,8 @@
-const TaskCard = ({ item }) => {
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
+const TaskCard = ({ item }) => {
+    AOS.init();
     const { category, description, time, title } = item;
 
     function timeAgo(date) {
@@ -30,13 +33,16 @@ const TaskCard = ({ item }) => {
     const newDate = new Date(time);
 
     return (
-        <div className="p-3 rounded-xl bg-green-200 border border-gray-400">
+        <div className="p-3 rounded-xl bg-green-200 border border-gray-400" >
+
             <div className="flex justify-between items-center mb-2">
-                <p className="text-black">Time: {timeAgo(newDate)}</p>
-                <h2 className="text-white font-medium text-sm bg-blue-400 px-2 rounded-md">{category}</h2>
+                <p className="text-black">Posted {timeAgo(newDate)}!</p>
+                <h2 className="text-white font-medium text-sm bg-blue-400 px-2 rounded-md" data-aos="fade-right"
+                    
+                    data-aos-easing="ease-in-sine">{category}</h2>
             </div>
-            <p className="text-black font-semibold">Title: {title}</p>
-            <p className="text-black">Description: {description}</p>
+            <p className="text-black font-semibold"> {title}</p>
+            <p className="text-black">Detail: {description}</p>
         </div>
     );
 };
